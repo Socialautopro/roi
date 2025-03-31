@@ -2,10 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -51,6 +51,28 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // New custom colors
+        base: {
+          black: "#0A0A0A",
+        },
+        brand: {
+          purple: "#6C2BD9",
+          blue: "#3A86FF",
+          pink: "#FF3CAC",
+          cyan: "#00F5FF",
+          indigo: "#1A1A2E",
+          lime: "#00FF9C",
+        },
+        frost: {
+          DEFAULT: "rgba(255,255,255,0.1)",
+          dark: "rgba(255,255,255,0.05)",
+          light: "rgba(255,255,255,0.2)",
+        },
+        glass: {
+          purple: "rgba(108, 43, 217, 0.2)",
+          blue: "rgba(58, 134, 255, 0.2)",
+          dark: "rgba(10, 10, 10, 0.7)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -71,7 +93,13 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      backgroundImage: {
+        "gradient-purple-blue": "linear-gradient(135deg, #6C2BD9, #3A86FF)",
+        "gradient-purple-pink": "linear-gradient(135deg, #6C2BD9, #FF3CAC)",
+        "gradient-blue-cyan": "linear-gradient(135deg, #3A86FF, #00F5FF)",
+        "gradient-indigo-purple": "linear-gradient(135deg, #1A1A2E, #6C2BD9)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

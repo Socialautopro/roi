@@ -38,9 +38,9 @@ const ServiceCard = ({
   onCtaClick = () => {},
 }: ServiceCardProps) => {
   return (
-    <Card className="overflow-hidden backdrop-blur-lg bg-black/40 border-purple-500/20 text-white h-full flex flex-col">
+    <Card className="overflow-hidden backdrop-blur-lg bg-[#0A0A0A]/70 border border-[#6C2BD9]/30 text-white h-full flex flex-col shadow-lg shadow-[#6C2BD9]/10">
       <CardHeader className="pb-2">
-        <div className="flex items-center gap-2 text-purple-400 mb-2">
+        <div className="flex items-center gap-2 text-[#6C2BD9] mb-2">
           {icon}
           <CardTitle className="text-xl">{title}</CardTitle>
         </div>
@@ -50,12 +50,12 @@ const ServiceCard = ({
       </CardHeader>
       <CardContent className="flex-grow">
         <div className="space-y-4">
-          <div className="bg-red-900/30 p-4 rounded-lg">
-            <h4 className="text-sm font-medium text-red-300 mb-1">BEFORE</h4>
+          <div className="bg-[#FF3CAC]/10 backdrop-blur-sm p-4 rounded-lg border border-[#FF3CAC]/20">
+            <h4 className="text-sm font-medium text-[#FF3CAC] mb-1">BEFORE</h4>
             <p className="text-gray-300">{beforeText}</p>
           </div>
-          <div className="bg-green-900/30 p-4 rounded-lg">
-            <h4 className="text-sm font-medium text-green-300 mb-1">AFTER</h4>
+          <div className="bg-[#00FF9C]/10 backdrop-blur-sm p-4 rounded-lg border border-[#00FF9C]/20">
+            <h4 className="text-sm font-medium text-[#00FF9C] mb-1">AFTER</h4>
             <p className="text-gray-300">{afterText}</p>
           </div>
         </div>
@@ -63,7 +63,7 @@ const ServiceCard = ({
       <CardFooter>
         <Button
           onClick={onCtaClick}
-          className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+          className="w-full bg-gradient-to-r from-[#6C2BD9] to-[#3A86FF] hover:from-[#6C2BD9] hover:to-[#6C2BD9] text-white transition-all duration-300"
         >
           {ctaText} <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
@@ -189,7 +189,7 @@ const ServicesSection = () => {
         >
           <Button
             size="lg"
-            className="bg-purple-600 hover:bg-purple-700 text-white px-8"
+            className="bg-gradient-to-r from-[#6C2BD9] to-[#3A86FF] hover:from-[#6C2BD9] hover:to-[#6C2BD9] text-white transition-all duration-300 px-8"
           >
             View All Services <ArrowRight className="ml-2 h-4 w-4" />
           </Button>

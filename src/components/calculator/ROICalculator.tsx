@@ -55,7 +55,7 @@ const ROICalculator = ({
   }, [employeeCost, hoursSpent, leadValue, leadIncrease]);
 
   return (
-    <section className="py-20 px-4 md:px-8 bg-gradient-to-b from-purple-950/20 to-black">
+    <section className="py-20 px-4 md:px-8 bg-gradient-to-b from-brand-indigo/30 to-base-black">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -78,10 +78,10 @@ const ROICalculator = ({
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <Card className="backdrop-blur-lg bg-black/40 border-purple-500/20 text-white overflow-hidden">
+            <Card className="backdrop-blur-lg bg-[#0A0A0A]/70 border border-[#6C2BD9]/30 text-white overflow-hidden shadow-lg shadow-[#6C2BD9]/10">
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-6">
-                  <Calculator className="h-6 w-6 text-purple-400" />
+                  <Calculator className="h-6 w-6 text-[#00F5FF]" />
                   <h3 className="text-xl font-semibold">
                     Customize Your Calculation
                   </h3>
@@ -93,7 +93,7 @@ const ROICalculator = ({
                       <Label htmlFor="employeeCost" className="text-gray-300">
                         Hourly employee cost ($/hour)
                       </Label>
-                      <span className="text-purple-400 font-medium">
+                      <span className="text-[#00F5FF] font-medium">
                         ${employeeCost}
                       </span>
                     </div>
@@ -113,7 +113,7 @@ const ROICalculator = ({
                       <Label htmlFor="hoursSpent" className="text-gray-300">
                         Weekly hours spent on manual tasks
                       </Label>
-                      <span className="text-purple-400 font-medium">
+                      <span className="text-[#00F5FF] font-medium">
                         {hoursSpent} hours
                       </span>
                     </div>
@@ -133,7 +133,7 @@ const ROICalculator = ({
                       <Label htmlFor="leadValue" className="text-gray-300">
                         Average value per customer ($)
                       </Label>
-                      <span className="text-purple-400 font-medium">
+                      <span className="text-[#00F5FF] font-medium">
                         ${leadValue}
                       </span>
                     </div>
@@ -161,7 +161,7 @@ const ROICalculator = ({
                           🏎️
                         </span>
                       </Label>
-                      <span className="text-purple-400 font-medium">
+                      <span className="text-[#00FF9C] font-medium">
                         {leadIncrease}%
                       </span>
                     </div>
@@ -187,18 +187,18 @@ const ROICalculator = ({
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <Card className="backdrop-blur-lg bg-purple-900/20 border-purple-500/30 text-white h-full">
+            <Card className="backdrop-blur-lg bg-[#1A1A2E]/80 border border-[#6C2BD9]/30 text-white h-full shadow-lg shadow-[#6C2BD9]/10">
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-6">
-                  <DollarSign className="h-6 w-6 text-purple-400" />
+                  <DollarSign className="h-6 w-6 text-[#00F5FF]" />
                   <h3 className="text-xl font-semibold">Your Potential ROI</h3>
                 </div>
 
                 <div className="space-y-6">
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-black/30 p-4 rounded-lg">
+                    <div className="bg-base-black/50 p-4 rounded-lg">
                       <div className="flex items-center gap-2 mb-2">
-                        <Clock className="h-5 w-5 text-purple-400" />
+                        <Clock className="h-5 w-5 text-[#00F5FF]" />
                         <h4 className="text-sm font-medium text-gray-300">
                           Monthly Time Savings
                         </h4>
@@ -211,9 +211,9 @@ const ROICalculator = ({
                       </p>
                     </div>
 
-                    <div className="bg-black/30 p-4 rounded-lg">
+                    <div className="bg-base-black/50 p-4 rounded-lg">
                       <div className="flex items-center gap-2 mb-2">
-                        <Users className="h-5 w-5 text-purple-400" />
+                        <Users className="h-5 w-5 text-[#00F5FF]" />
                         <h4 className="text-sm font-medium text-gray-300">
                           Additional Annual Revenue
                         </h4>
@@ -232,9 +232,9 @@ const ROICalculator = ({
                       <h4 className="text-lg font-medium text-white">
                         Total ROI
                       </h4>
-                      <div className="w-full bg-black/30 rounded-full h-4 mt-2">
+                      <div className="w-full bg-base-black/50 rounded-full h-4 mt-2">
                         <div
-                          className="bg-gradient-to-r from-purple-600 to-purple-400 h-4 rounded-full"
+                          className="bg-gradient-to-r from-[#6C2BD9] to-[#3A86FF] h-4 rounded-full"
                           style={{ width: `${Math.min(totalROI / 10, 100)}%` }}
                         ></div>
                       </div>
@@ -252,8 +252,8 @@ const ROICalculator = ({
                     </p>
                   </div>
 
-                  <div className="bg-green-900/20 p-4 rounded-lg mt-6">
-                    <h4 className="text-lg font-medium text-white mb-2">
+                  <div className="bg-[#00FF9C]/10 backdrop-blur-sm p-4 rounded-lg mt-6 border border-[#00FF9C]/20">
+                    <h4 className="text-lg font-medium text-[#00FF9C] mb-2">
                       Payback Period
                     </h4>
                     <p className="text-3xl font-bold text-white">
@@ -265,10 +265,14 @@ const ROICalculator = ({
                     </p>
                   </div>
 
-                  <div className="bg-yellow-900/20 p-4 rounded-lg mt-6">
-                    <h4 className="text-lg font-medium text-white mb-2 flex items-center">
+                  <div className="bg-[#3A86FF]/10 backdrop-blur-sm p-4 rounded-lg mt-6 border border-[#3A86FF]/20">
+                    <h4 className="text-lg font-medium text-[#3A86FF] mb-2 flex items-center">
                       <span className="mr-2">Lamborghinis Per Year</span>
-                      <span role="img" aria-label="sports car">
+                      <span
+                        role="img"
+                        aria-label="sports car"
+                        className="text-xl"
+                      >
                         🏎️
                       </span>
                     </h4>
@@ -283,7 +287,7 @@ const ROICalculator = ({
                     </p>
                   </div>
 
-                  <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white mt-6">
+                  <Button className="w-full bg-gradient-to-r from-[#6C2BD9] to-[#3A86FF] hover:from-[#6C2BD9] hover:to-[#6C2BD9] text-white transition-all duration-300 mt-6">
                     Book a Consultation to Learn More{" "}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>

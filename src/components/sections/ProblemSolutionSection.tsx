@@ -42,7 +42,7 @@ const ProblemSolutionSection = ({
   onCtaClick = () => {},
 }: ProblemSolutionSectionProps) => {
   return (
-    <section className="py-20 px-4 md:px-8 bg-black bg-opacity-90">
+    <section className="py-20 px-4 md:px-8 bg-base-black bg-opacity-90">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -66,19 +66,19 @@ const ProblemSolutionSection = ({
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full overflow-hidden backdrop-blur-lg bg-black/40 border-purple-500/20 hover:border-purple-500/50 transition-all duration-300">
+              <Card className="h-full overflow-hidden backdrop-blur-lg bg-black/40 border border-[#6C2BD9]/30 hover:border-[#6C2BD9]/70 transition-all duration-300">
                 <div className="p-6">
-                  <div className="rounded-full bg-purple-900/30 p-3 mb-6 inline-block">
+                  <div className="rounded-full bg-[#6C2BD9]/30 p-3 mb-6 inline-block">
                     {React.cloneElement(item.icon as React.ReactElement, {
-                      className: "h-8 w-8 text-purple-400",
+                      className: "h-8 w-8 text-[#00F5FF]",
                     })}
                   </div>
 
-                  <div className="mb-6 bg-red-900/20 p-4 rounded-lg">
+                  <div className="mb-6 bg-[#FF3CAC]/10 backdrop-blur-sm p-4 rounded-lg border border-[#FF3CAC]/20">
                     <div className="flex items-start">
-                      <X className="h-5 w-5 text-red-400 mt-0.5 mr-2 flex-shrink-0" />
+                      <X className="h-5 w-5 text-[#FF3CAC] mt-0.5 mr-2 flex-shrink-0" />
                       <div>
-                        <h4 className="text-sm font-medium text-red-300 mb-1">
+                        <h4 className="text-sm font-medium text-[#FF3CAC] mb-1">
                           THE PROBLEM
                         </h4>
                         <p className="text-white">{item.problem}</p>
@@ -86,11 +86,11 @@ const ProblemSolutionSection = ({
                     </div>
                   </div>
 
-                  <div className="bg-green-900/20 p-4 rounded-lg">
+                  <div className="bg-[#00FF9C]/10 backdrop-blur-sm p-4 rounded-lg border border-[#00FF9C]/20">
                     <div className="flex items-start">
-                      <Check className="h-5 w-5 text-green-400 mt-0.5 mr-2 flex-shrink-0" />
+                      <Check className="h-5 w-5 text-[#00FF9C] mt-0.5 mr-2 flex-shrink-0" />
                       <div>
-                        <h4 className="text-sm font-medium text-green-300 mb-1">
+                        <h4 className="text-sm font-medium text-[#00FF9C] mb-1">
                           OUR SOLUTION
                         </h4>
                         <p className="text-white">{item.solution}</p>
@@ -112,7 +112,7 @@ const ProblemSolutionSection = ({
         >
           <Button
             onClick={onCtaClick}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full"
+            className="bg-gradient-to-r from-[#6C2BD9] to-[#3A86FF] hover:from-[#6C2BD9] hover:to-[#6C2BD9] text-white transition-all duration-300 px-6 py-2"
           >
             {ctaText} <ArrowRight className="ml-2 h-4 w-4" />
           </Button>

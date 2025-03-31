@@ -45,10 +45,10 @@ const ConsultationBooking = ({
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
     company: "",
     message: "",
   });
+
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleInputChange = (
@@ -61,397 +61,277 @@ const ConsultationBooking = ({
     }));
   };
 
+  const handleDateSelect = (selectedDate: Date | undefined) => {
+    setDate(selectedDate);
+  };
+
   const handleTimeSelect = (time: string) => {
     setSelectedTime(time);
   };
 
   const handleNextStep = () => {
-    setFormStep(2);
+    setFormStep((prev) => prev + 1);
   };
 
   const handlePrevStep = () => {
-    setFormStep(1);
+    setFormStep((prev) => prev - 1);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Here you would typically send the data to your backend
-    console.log({
-      ...formData,
-      date: date ? format(date, "PPP") : "",
-      time: selectedTime,
-    });
+    console.log("Form submitted:", { date, selectedTime, ...formData });
     setIsSubmitted(true);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.5 } },
+  };
+
   return (
-    <section
-      id="consultation"
-      className="py-20 px-4 md:px-8 bg-black bg-opacity-90"
-    >
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-            {title}
-          </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto">{subtitle}</p>
-        </motion.div>
+    <div className="w-full max-w-4xl mx-auto p-6">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="text-center mb-8"
+      >
+        <h2 className="text-3xl font-bold text-white mb-2">{title}</h2>
+        <p className="text-gray-300">{subtitle}</p>
+      </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-          {/* Left side - Benefits */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2"
-          >
-            <Card className="backdrop-blur-lg bg-black/40 border-purple-500/20 text-white h-full">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-6 text-purple-400">
-                  What to Expect in Your Consultation
-                </h3>
-
-                <div className="space-y-6">
-                  <div className="flex items-start gap-3">
-                    <div className="rounded-full bg-purple-900/30 p-2 mt-1">
-                      <Check className="h-4 w-4 text-purple-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white mb-1">
-                        Understand Your Needs
-                      </h4>
-                      <p className="text-gray-300 text-sm">
-                        We'll discuss your business challenges and identify
-                        automation opportunities
-                      </p>
-                    </div>
+      {isSubmitted ? (
+        <Card className="bg-black/40 backdrop-blur-lg border border-purple-500/30 shadow-xl">
+          <CardContent className="p-8 text-center">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="flex justify-center mb-6"
+            >
+              <div className="rounded-full bg-green-500 p-3">
+                <Check className="h-8 w-8 text-white" />
+              </div>
+            </motion.div>
+            <h3 className="text-2xl font-bold text-white mb-4">
+              Consultation Booked!
+            </h3>
+            <p className="text-gray-300 mb-6">
+              Thank you for scheduling your consultation. We've sent a
+              confirmation to your email with all the details.
+            </p>
+            <div className="bg-black/30 rounded-lg p-4 mb-6 max-w-md mx-auto">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-gray-400">Date:</span>
+                <span className="text-white font-medium">
+                  {date ? format(date, "PPP") : "Not selected"}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-400">Time:</span>
+                <span className="text-white font-medium">
+                  {selectedTime || "Not selected"}
+                </span>
+              </div>
+            </div>
+            <Button
+              className="bg-purple-600 hover:bg-purple-700 text-white"
+              onClick={() => setIsSubmitted(false)}
+            >
+              Book Another Consultation
+            </Button>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card className="bg-black/40 backdrop-blur-lg border border-purple-500/30 shadow-xl">
+          <CardContent className="p-6">
+            <form onSubmit={handleSubmit}>
+              {formStep === 1 && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <h3 className="text-xl font-semibold text-white mb-4">
+                    Select a Date & Time
+                  </h3>
+                  <div className="mb-6">
+                    <Label htmlFor="date" className="text-gray-300 mb-2 block">
+                      Date
+                    </Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start text-left font-normal bg-black/50 border-purple-500/30 text-white hover:bg-black/70"
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {date ? (
+                            format(date, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 bg-black/90 border border-purple-500/30">
+                        <Calendar
+                          mode="single"
+                          selected={date}
+                          onSelect={handleDateSelect}
+                          initialFocus
+                          className="bg-transparent text-white"
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </div>
 
-                  <div className="flex items-start gap-3">
-                    <div className="rounded-full bg-purple-900/30 p-2 mt-1">
-                      <Check className="h-4 w-4 text-purple-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white mb-1">
-                        Explore Solutions
-                      </h4>
-                      <p className="text-gray-300 text-sm">
-                        Learn about specific AI tools and approaches that could
-                        benefit your business
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="rounded-full bg-purple-900/30 p-2 mt-1">
-                      <Check className="h-4 w-4 text-purple-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white mb-1">
-                        Get a Custom Roadmap
-                      </h4>
-                      <p className="text-gray-300 text-sm">
-                        Receive a high-level implementation plan with estimated
-                        timeline and ROI
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="rounded-full bg-purple-900/30 p-2 mt-1">
-                      <Check className="h-4 w-4 text-purple-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white mb-1">
-                        No Pressure
-                      </h4>
-                      <p className="text-gray-300 text-sm">
-                        Zero obligation consultation focused on providing value
-                        and insights
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-8 p-4 bg-purple-900/20 rounded-lg border border-purple-500/20">
-                  <p className="text-sm text-gray-300 italic">
-                    "The consultation was eye-opening. We implemented the
-                    suggested AI automation and saved over 30 hours per week in
-                    manual tasks."
-                  </p>
-                  <p className="text-sm text-purple-300 mt-2">
-                    — Sarah Johnson, Marketing Director
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Right side - Booking Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="lg:col-span-3"
-          >
-            <Card className="backdrop-blur-lg bg-black/40 border-purple-500/20 text-white overflow-hidden">
-              <CardContent className="p-6">
-                {isSubmitted ? (
-                  <div className="text-center py-12">
-                    <div className="rounded-full bg-green-900/30 p-4 mx-auto w-16 h-16 flex items-center justify-center mb-6">
-                      <Check className="h-8 w-8 text-green-400" />
-                    </div>
-                    <h3 className="text-2xl font-semibold mb-4 text-white">
-                      Booking Confirmed!
-                    </h3>
-                    <p className="text-gray-300 mb-6">
-                      Thanks for scheduling your consultation. We've sent a
-                      confirmation to your email with all the details.
-                    </p>
-                    <div className="bg-purple-900/20 p-4 rounded-lg max-w-md mx-auto">
-                      <div className="flex items-center gap-2 mb-2">
-                        <CalendarIcon className="h-5 w-5 text-purple-400" />
-                        <span className="text-white font-medium">
-                          {date ? format(date, "EEEE, MMMM d, yyyy") : ""}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="h-5 w-5 text-purple-400" />
-                        <span className="text-white font-medium">
-                          {selectedTime}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit}>
-                    {formStep === 1 ? (
-                      <div className="space-y-6">
-                        <h3 className="text-xl font-semibold mb-6">
-                          Select a Date & Time
-                        </h3>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div>
-                            <Label
-                              htmlFor="date"
-                              className="text-gray-300 mb-2 block"
-                            >
-                              Date
-                            </Label>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  className="w-full justify-start text-left font-normal border-gray-700 bg-black/20 text-white hover:bg-black/30 hover:text-white"
-                                >
-                                  <CalendarIcon className="mr-2 h-4 w-4" />
-                                  {date ? (
-                                    format(date, "PPP")
-                                  ) : (
-                                    <span>Pick a date</span>
-                                  )}
-                                </Button>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0 bg-black/90 border-gray-700">
-                                <Calendar
-                                  mode="single"
-                                  selected={date}
-                                  onSelect={setDate}
-                                  initialFocus
-                                  disabled={(date) => {
-                                    // Disable past dates and weekends
-                                    const today = new Date();
-                                    today.setHours(0, 0, 0, 0);
-                                    return (
-                                      date < today ||
-                                      date.getDay() === 0 ||
-                                      date.getDay() === 6
-                                    );
-                                  }}
-                                  className="bg-black text-white"
-                                />
-                              </PopoverContent>
-                            </Popover>
-                          </div>
-
-                          <div>
-                            <Label
-                              htmlFor="time"
-                              className="text-gray-300 mb-2 block"
-                            >
-                              Time
-                            </Label>
-                            <div className="grid grid-cols-3 gap-2 max-h-[200px] overflow-y-auto pr-2">
-                              {timeSlots.map((time) => (
-                                <Button
-                                  key={time}
-                                  type="button"
-                                  variant="outline"
-                                  className={`border-gray-700 ${selectedTime === time ? "bg-purple-600 text-white" : "bg-black/20 text-white hover:bg-black/30"}`}
-                                  onClick={() => handleTimeSelect(time)}
-                                >
-                                  {time}
-                                </Button>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="pt-4">
+                  {date && (
+                    <div className="mb-6">
+                      <Label className="text-gray-300 mb-2 block">Time</Label>
+                      <div className="grid grid-cols-3 gap-2">
+                        {timeSlots.map((time) => (
                           <Button
-                            type="button"
-                            className="w-full bg-purple-600 hover:bg-purple-700 text-white"
-                            disabled={!date || !selectedTime}
-                            onClick={handleNextStep}
-                          >
-                            Continue
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="space-y-4">
-                        <h3 className="text-xl font-semibold mb-6">
-                          Your Information
-                        </h3>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <Label
-                              htmlFor="name"
-                              className="text-gray-300 mb-2 block"
-                            >
-                              Full Name
-                            </Label>
-                            <Input
-                              id="name"
-                              name="name"
-                              value={formData.name}
-                              onChange={handleInputChange}
-                              required
-                              className="bg-black/20 border-gray-700 text-white"
-                            />
-                          </div>
-
-                          <div>
-                            <Label
-                              htmlFor="email"
-                              className="text-gray-300 mb-2 block"
-                            >
-                              Email Address
-                            </Label>
-                            <Input
-                              id="email"
-                              name="email"
-                              type="email"
-                              value={formData.email}
-                              onChange={handleInputChange}
-                              required
-                              className="bg-black/20 border-gray-700 text-white"
-                            />
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <Label
-                              htmlFor="phone"
-                              className="text-gray-300 mb-2 block"
-                            >
-                              Phone Number
-                            </Label>
-                            <Input
-                              id="phone"
-                              name="phone"
-                              value={formData.phone}
-                              onChange={handleInputChange}
-                              className="bg-black/20 border-gray-700 text-white"
-                            />
-                          </div>
-
-                          <div>
-                            <Label
-                              htmlFor="company"
-                              className="text-gray-300 mb-2 block"
-                            >
-                              Company Name
-                            </Label>
-                            <Input
-                              id="company"
-                              name="company"
-                              value={formData.company}
-                              onChange={handleInputChange}
-                              className="bg-black/20 border-gray-700 text-white"
-                            />
-                          </div>
-                        </div>
-
-                        <div>
-                          <Label
-                            htmlFor="message"
-                            className="text-gray-300 mb-2 block"
-                          >
-                            What are your main business challenges? (Optional)
-                          </Label>
-                          <Textarea
-                            id="message"
-                            name="message"
-                            value={formData.message}
-                            onChange={handleInputChange}
-                            rows={3}
-                            className="bg-black/20 border-gray-700 text-white"
-                          />
-                        </div>
-
-                        <div className="bg-purple-900/20 p-4 rounded-lg">
-                          <div className="flex items-center gap-2 mb-2">
-                            <CalendarIcon className="h-5 w-5 text-purple-400" />
-                            <span className="text-white font-medium">
-                              {date ? format(date, "EEEE, MMMM d, yyyy") : ""}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Clock className="h-5 w-5 text-purple-400" />
-                            <span className="text-white font-medium">
-                              {selectedTime}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="pt-4 flex gap-4">
-                          <Button
+                            key={time}
                             type="button"
                             variant="outline"
-                            className="flex-1 border-gray-700 text-white hover:bg-black/30"
-                            onClick={handlePrevStep}
+                            className={`flex items-center justify-center py-2 px-3 ${
+                              selectedTime === time
+                                ? "bg-purple-600 text-white border-purple-600"
+                                : "bg-black/50 border-purple-500/30 text-white hover:bg-black/70"
+                            }`}
+                            onClick={() => handleTimeSelect(time)}
                           >
-                            Back
+                            <Clock className="mr-2 h-4 w-4" />
+                            {time}
                           </Button>
-                          <Button
-                            type="submit"
-                            className="flex-1 bg-purple-600 hover:bg-purple-700 text-white"
-                          >
-                            Confirm Booking
-                          </Button>
-                        </div>
+                        ))}
                       </div>
-                    )}
-                  </form>
-                )}
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-      </div>
-    </section>
+                    </div>
+                  )}
+
+                  <div className="flex justify-end mt-6">
+                    <Button
+                      type="button"
+                      className="bg-purple-600 hover:bg-purple-700 text-white"
+                      onClick={handleNextStep}
+                      disabled={!date || !selectedTime}
+                    >
+                      Next Step
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+
+              {formStep === 2 && (
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <h3 className="text-xl font-semibold text-white mb-4">
+                    Your Information
+                  </h3>
+
+                  <div className="space-y-4">
+                    <div>
+                      <Label
+                        htmlFor="name"
+                        className="text-gray-300 mb-2 block"
+                      >
+                        Full Name
+                      </Label>
+                      <Input
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="John Doe"
+                        required
+                        className="bg-black/50 border-purple-500/30 text-white placeholder:text-gray-500"
+                      />
+                    </div>
+
+                    <div>
+                      <Label
+                        htmlFor="email"
+                        className="text-gray-300 mb-2 block"
+                      >
+                        Email Address
+                      </Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="john@example.com"
+                        required
+                        className="bg-black/50 border-purple-500/30 text-white placeholder:text-gray-500"
+                      />
+                    </div>
+
+                    <div>
+                      <Label
+                        htmlFor="company"
+                        className="text-gray-300 mb-2 block"
+                      >
+                        Company Name
+                      </Label>
+                      <Input
+                        id="company"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleInputChange}
+                        placeholder="Acme Inc."
+                        className="bg-black/50 border-purple-500/30 text-white placeholder:text-gray-500"
+                      />
+                    </div>
+
+                    <div>
+                      <Label
+                        htmlFor="message"
+                        className="text-gray-300 mb-2 block"
+                      >
+                        What would you like to discuss?
+                      </Label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        placeholder="Brief description of your automation needs..."
+                        className="bg-black/50 border-purple-500/30 text-white placeholder:text-gray-500"
+                        rows={4}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between mt-6">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handlePrevStep}
+                      className="border-purple-500/30 text-white hover:bg-black/70"
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="bg-purple-600 hover:bg-purple-700 text-white"
+                    >
+                      Book Consultation
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+            </form>
+          </CardContent>
+        </Card>
+      )}
+    </div>
   );
 };
 
